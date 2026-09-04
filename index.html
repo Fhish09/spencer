@@ -46,7 +46,7 @@
     body { font-family: 'Inter', system-ui, sans-serif; }
     h1, h2, h3, .font-serif { font-family: 'Cormorant Garamond', Georgia, serif; }
 
-    /* Stronger, more reliable hero image fade */
+    /* Hero image seamless fade into lavender/ivory background */
     .hero-image-wrapper {
       position: relative;
       width: 100%;
@@ -57,11 +57,11 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
-      object-position: center 15%;
+      object-position: center center;
       display: block;
     }
 
-    /* Left side fade (main blend into text area) */
+    /* Strong left fade into the text area */
     .hero-image-wrapper::before {
       content: '';
       position: absolute;
@@ -69,15 +69,16 @@
       background: linear-gradient(
         to right,
         #FDFCFA 0%,
-        rgba(253, 252, 250, 0.85) 12%,
-        rgba(253, 252, 250, 0.4) 28%,
-        transparent 45%
+        rgba(253, 252, 250, 0.92) 10%,
+        rgba(253, 252, 250, 0.55) 25%,
+        rgba(253, 252, 250, 0.15) 40%,
+        transparent 55%
       );
       pointer-events: none;
       z-index: 2;
     }
 
-    /* Top fade */
+    /* Soft top fade */
     .hero-image-wrapper::after {
       content: '';
       position: absolute;
@@ -85,24 +86,24 @@
       background: linear-gradient(
         to bottom,
         #FDFCFA 0%,
-        rgba(253, 252, 250, 0.6) 8%,
-        transparent 22%
+        rgba(253, 252, 250, 0.7) 6%,
+        transparent 18%
       );
       pointer-events: none;
       z-index: 2;
     }
 
-    /* Bottom fade layer */
+    /* Soft bottom fade */
     .hero-bottom-fade {
       position: absolute;
       left: 0;
       right: 0;
       bottom: 0;
-      height: 35%;
+      height: 40%;
       background: linear-gradient(
         to top,
         #FDFCFA 0%,
-        rgba(253, 252, 250, 0.7) 30%,
+        rgba(253, 252, 250, 0.75) 25%,
         transparent 100%
       );
       pointer-events: none;
@@ -114,8 +115,8 @@
         background: linear-gradient(
           to top,
           #FDFCFA 0%,
-          rgba(253, 252, 250, 0.7) 15%,
-          transparent 40%
+          rgba(253, 252, 250, 0.8) 12%,
+          transparent 38%
         );
       }
     }
@@ -190,14 +191,14 @@
 
   <!-- ========== HERO ========== -->
   <section class="relative min-h-screen flex items-center pt-20 overflow-hidden bg-ivory-50">
-    <!-- Soft background atmosphere -->
-    <div class="absolute top-0 right-0 w-[55%] h-full bg-gradient-to-l from-lavender-50/60 to-transparent pointer-events-none"></div>
+    <!-- Soft lavender atmosphere -->
+    <div class="absolute top-0 right-0 w-[60%] h-full bg-gradient-to-l from-lavender-50/70 to-transparent pointer-events-none"></div>
     <div class="absolute bottom-0 left-0 w-96 h-96 bg-lavender-100/30 rounded-full blur-3xl pointer-events-none"></div>
 
     <div class="max-w-7xl mx-auto px-5 sm:px-8 w-full relative z-10">
       <div class="grid lg:grid-cols-2 gap-10 lg:gap-6 items-center">
         
-        <!-- Left content -->
+        <!-- Left content - unchanged -->
         <div class="order-2 lg:order-1 text-center lg:text-left relative z-20">
           <p class="text-lavender-500 font-medium tracking-[0.2em] text-xs uppercase mb-5">Love. Care. Forever Home.</p>
           
@@ -240,12 +241,12 @@
           </div>
         </div>
 
-        <!-- Right: Westie photo with strong visible fade -->
+        <!-- Right: Your uploaded Westie photo with soft lavender fade -->
         <div class="order-1 lg:order-2 relative h-[420px] sm:h-[520px] lg:h-[640px] xl:h-[700px]">
-          <div class="hero-image-wrapper absolute inset-0 lg:-right-12 xl:-right-20">
+          <div class="hero-image-wrapper absolute inset-0 lg:-right-16 xl:-right-28">
             <img 
-              src="https://images.unsplash.com/photo-1583511655857-d19b40a7ba34?auto=format&fit=crop&w=1100&q=90" 
-              alt="Beautiful West Highland White Terrier"
+              src="westie-hero.jpg" 
+              alt="West Highland White Terriers – adult and puppies"
             />
             <div class="hero-bottom-fade"></div>
           </div>
