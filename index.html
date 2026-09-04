@@ -46,38 +46,81 @@
     body { font-family: 'Inter', system-ui, sans-serif; }
     h1, h2, h3, .font-serif { font-family: 'Cormorant Garamond', Georgia, serif; }
 
-    /* Hero image seamless multi-edge fade */
-    .hero-fade {
-      -webkit-mask-image: 
-        linear-gradient(to right, transparent 0%, black 18%, black 100%),
-        linear-gradient(to top, transparent 0%, black 10%, black 90%, transparent 100%),
-        linear-gradient(to bottom, transparent 0%, black 6%, black 100%);
-      -webkit-mask-composite: source-in;
-              mask-image: 
-        linear-gradient(to right, transparent 0%, black 18%, black 100%),
-        linear-gradient(to top, transparent 0%, black 10%, black 90%, transparent 100%),
-        linear-gradient(to bottom, transparent 0%, black 6%, black 100%);
-              mask-composite: intersect;
+    /* Stronger, more reliable hero image fade */
+    .hero-image-wrapper {
+      position: relative;
+      width: 100%;
+      height: 100%;
+    }
+
+    .hero-image-wrapper img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 15%;
+      display: block;
+    }
+
+    /* Left side fade (main blend into text area) */
+    .hero-image-wrapper::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to right,
+        #FDFCFA 0%,
+        rgba(253, 252, 250, 0.85) 12%,
+        rgba(253, 252, 250, 0.4) 28%,
+        transparent 45%
+      );
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    /* Top fade */
+    .hero-image-wrapper::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to bottom,
+        #FDFCFA 0%,
+        rgba(253, 252, 250, 0.6) 8%,
+        transparent 22%
+      );
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    /* Bottom fade layer */
+    .hero-bottom-fade {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 35%;
+      background: linear-gradient(
+        to top,
+        #FDFCFA 0%,
+        rgba(253, 252, 250, 0.7) 30%,
+        transparent 100%
+      );
+      pointer-events: none;
+      z-index: 2;
     }
 
     @media (max-width: 1023px) {
-      .hero-fade {
-        -webkit-mask-image: linear-gradient(to top, transparent 0%, black 20%, black 100%);
-                mask-image: linear-gradient(to top, transparent 0%, black 20%, black 100%);
+      .hero-image-wrapper::before {
+        background: linear-gradient(
+          to top,
+          #FDFCFA 0%,
+          rgba(253, 252, 250, 0.7) 15%,
+          transparent 40%
+        );
       }
     }
 
-    /* Card image soft edge */
-    .card-img-fade {
-      -webkit-mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
-              mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
-    }
-
     /* Animations */
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(30px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
     .reveal {
       opacity: 0;
       transform: translateY(30px);
@@ -148,14 +191,14 @@
   <!-- ========== HERO ========== -->
   <section class="relative min-h-screen flex items-center pt-20 overflow-hidden bg-ivory-50">
     <!-- Soft background atmosphere -->
-    <div class="absolute top-0 right-0 w-[60%] h-full bg-gradient-to-l from-lavender-50/80 to-transparent pointer-events-none"></div>
-    <div class="absolute bottom-0 left-0 w-96 h-96 bg-lavender-100/40 rounded-full blur-3xl pointer-events-none"></div>
+    <div class="absolute top-0 right-0 w-[55%] h-full bg-gradient-to-l from-lavender-50/60 to-transparent pointer-events-none"></div>
+    <div class="absolute bottom-0 left-0 w-96 h-96 bg-lavender-100/30 rounded-full blur-3xl pointer-events-none"></div>
 
     <div class="max-w-7xl mx-auto px-5 sm:px-8 w-full relative z-10">
-      <div class="grid lg:grid-cols-2 gap-12 lg:gap-8 items-center">
+      <div class="grid lg:grid-cols-2 gap-10 lg:gap-6 items-center">
         
         <!-- Left content -->
-        <div class="order-2 lg:order-1 text-center lg:text-left">
+        <div class="order-2 lg:order-1 text-center lg:text-left relative z-20">
           <p class="text-lavender-500 font-medium tracking-[0.2em] text-xs uppercase mb-5">Love. Care. Forever Home.</p>
           
           <h1 class="font-serif text-5xl sm:text-6xl lg:text-[3.8rem] xl:text-7xl font-semibold text-charcoal leading-[1.1] mb-6">
@@ -197,19 +240,15 @@
           </div>
         </div>
 
-        <!-- Right: Westie photo with seamless fade -->
+        <!-- Right: Westie photo with strong visible fade -->
         <div class="order-1 lg:order-2 relative h-[420px] sm:h-[520px] lg:h-[640px] xl:h-[700px]">
-          <div class="absolute inset-0 lg:-right-16 xl:-right-24 hero-fade">
+          <div class="hero-image-wrapper absolute inset-0 lg:-right-12 xl:-right-20">
             <img 
               src="https://images.unsplash.com/photo-1583511655857-d19b40a7ba34?auto=format&fit=crop&w=1100&q=90" 
-              alt="Beautiful West Highland White Terrier" 
-              class="w-full h-full object-cover object-[center_15%]"
+              alt="Beautiful West Highland White Terrier"
             />
+            <div class="hero-bottom-fade"></div>
           </div>
-          <!-- Soft blending layers -->
-          <div class="absolute inset-0 bg-gradient-to-l from-transparent via-transparent to-ivory-50/60 lg:to-ivory-50/80 pointer-events-none"></div>
-          <div class="absolute inset-x-0 top-0 h-20 bg-gradient-to-b from-ivory-50/70 to-transparent pointer-events-none"></div>
-          <div class="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-ivory-50 to-transparent pointer-events-none"></div>
         </div>
       </div>
     </div>
@@ -225,7 +264,6 @@
       </div>
 
       <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
-        <!-- Card 1 -->
         <article class="bg-white rounded-3xl overflow-hidden border border-lavender-100 hover-lift reveal">
           <div class="aspect-[4/5] overflow-hidden">
             <img src="https://images.unsplash.com/photo-1583511655857-d19b40a7ba34?auto=format&fit=crop&w=600&q=85" alt="Bella" class="w-full h-full object-cover hover:scale-105 transition duration-700"/>
@@ -237,13 +275,11 @@
             </div>
             <p class="text-charcoal-muted text-sm mb-5">Gentle · Playful · Loves children</p>
             <a href="#" class="inline-flex items-center text-lavender-600 font-medium text-sm hover:text-lavender-700 transition">
-              Meet Bella
-              <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+              Meet Bella →
             </a>
           </div>
         </article>
 
-        <!-- Card 2 -->
         <article class="bg-white rounded-3xl overflow-hidden border border-lavender-100 hover-lift reveal">
           <div class="aspect-[4/5] overflow-hidden">
             <img src="https://images.unsplash.com/photo-1548199973-03cce0bbc87b?auto=format&fit=crop&w=600&q=85" alt="Charlie" class="w-full h-full object-cover hover:scale-105 transition duration-700"/>
@@ -255,13 +291,11 @@
             </div>
             <p class="text-charcoal-muted text-sm mb-5">Calm · Loyal · Great with other dogs</p>
             <a href="#" class="inline-flex items-center text-lavender-600 font-medium text-sm hover:text-lavender-700 transition">
-              Meet Charlie
-              <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+              Meet Charlie →
             </a>
           </div>
         </article>
 
-        <!-- Card 3 -->
         <article class="bg-white rounded-3xl overflow-hidden border border-lavender-100 hover-lift reveal">
           <div class="aspect-[4/5] overflow-hidden">
             <img src="https://images.unsplash.com/photo-1587300003388-59208cc962cb?auto=format&fit=crop&w=600&q=85" alt="Daisy" class="w-full h-full object-cover hover:scale-105 transition duration-700"/>
@@ -273,8 +307,7 @@
             </div>
             <p class="text-charcoal-muted text-sm mb-5">Curious · Energetic · Quick learner</p>
             <a href="#" class="inline-flex items-center text-lavender-600 font-medium text-sm hover:text-lavender-700 transition">
-              Meet Daisy
-              <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+              Meet Daisy →
             </a>
           </div>
         </article>
@@ -466,18 +499,14 @@
   </footer>
 
   <script>
-    // Mobile menu
     const btn = document.getElementById('mobile-btn');
     const menu = document.getElementById('mobile-menu');
     btn.addEventListener('click', () => menu.classList.toggle('hidden'));
 
-    // Scroll reveal
     const reveals = document.querySelectorAll('.reveal');
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-        }
+        if (entry.isIntersecting) entry.target.classList.add('visible');
       });
     }, { threshold: 0.12 });
     reveals.forEach(el => observer.observe(el));
